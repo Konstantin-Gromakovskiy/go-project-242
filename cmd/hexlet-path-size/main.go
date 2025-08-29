@@ -1,9 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"context"
+	"github.com/urfave/cli/v3"
+	"os"
 )
 
 func main() {
-	fmt.Println("Hello from Hexlet!")
+	(&cli.Command{}).Run(context.Background(), os.Args)
 }
