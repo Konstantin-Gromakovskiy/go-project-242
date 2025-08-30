@@ -1,11 +1,17 @@
 package main
 
 import (
-	"context"
-	"github.com/urfave/cli/v3"
-	"os"
+	code "code/src"
+	"fmt"
 )
 
 func main() {
-	(&cli.Command{}).Run(context.Background(), os.Args)
+	// (&cli.Command{}).Run(context.Background(), os.Args)
+	path := "/Users/konstantin/Programming/go-project-242/src"
+	result, err := code.GetSize(path)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Printf("%d	%s", result, path)
 }
