@@ -87,7 +87,7 @@ func FormatSize(size int, human bool) string {
 		unit = "KB"
 	} else {
 		formatSize = floatSize
-		unit = "B"
+		return fmt.Sprintf("%.0fB", formatSize)
 	}
 
 	return fmt.Sprintf("%.1f%s", formatSize, unit)
