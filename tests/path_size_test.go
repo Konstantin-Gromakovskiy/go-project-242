@@ -1,7 +1,7 @@
 package tests
 
 import (
-	code "code/src"
+	"code"
 	"os"
 	"path/filepath"
 	"testing"

@@ -1,7 +1,7 @@
 package main
 
 import (
-	code "code/src"
+	"code"
 	"context"
 	"fmt"
 	"os"
