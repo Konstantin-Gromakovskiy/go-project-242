@@ -2,16 +2,45 @@ package main
 
 import (
 	code "code/src"
+	"context"
 	"fmt"
+	"os"
+
+	"github.com/urfave/cli/v3"
 )
 
 func main() {
-	// (&cli.Command{}).Run(context.Background(), os.Args)
-	path := "/Users/konstantin/Programming/go-project-242/src"
-	result, err := code.GetSize(path)
+	cmd := &cli.Command{
+		Flags: []cli.Flag{
+			&cli.BoolFlag{
+				Name:  "human",
+				Usage: "human-readable sizes (auto-select unit)",
+			},
+			&cli.BoolFlag{
+				Name:    "all",
+				Aliases: []string{"a"},
+				Usage:   "include hidden files and directories",
+			},
+		},
+		Action: func(ctx context.Context, cmd *cli.Command) error {
+			if cmd.NArg() == 0 {
+				return cli.ShowAppHelp(cmd)
+			}
+			humanFlag := cmd.Bool("human")
+			hiddenFlag := cmd.Bool("all")
+			path := cmd.Args().First()
+			result, err := code.GetSize(path, hiddenFlag)
+			if err != nil {
+				fmt.Print(err)
+			}
+
+			fmt.Printf("%s	%s", code.FormatSize(result, humanFlag), path)
+			return nil
+		},
+	}
+
+	err := cmd.Run(context.Background(), os.Args)
 	if err != nil {
 		fmt.Println(err)
-		return
 	}
-	fmt.Printf("%d	%s", result, path)
 }
