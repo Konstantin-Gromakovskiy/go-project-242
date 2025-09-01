@@ -4,25 +4,23 @@ import (
 	"fmt"
 	"math"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
-func GetSize(path string, findHidden bool) (int, error) {
+func GetSize(path string, findHidden bool, recursive bool) (int, error) {
 
 	file, err := os.Lstat(path)
-
 	if err != nil {
 		return 0, err
 	}
 
 	isDir := file.IsDir()
-
 	if !isDir {
 		return int(file.Size()), nil
 	}
 
 	files, err := os.ReadDir(path)
-
 	if err != nil {
 		return 0, err
 	}
@@ -32,6 +30,20 @@ func GetSize(path string, findHidden bool) (int, error) {
 		fileInfo, err := v.Info()
 		if err != nil {
 			return 0, err
+		}
+
+		isDir := fileInfo.IsDir()
+
+		if isDir && recursive {
+			result, err := GetSize(filepath.Join(path, fileInfo.Name()), findHidden, recursive)
+
+			if err != nil {
+				return 0, err
+			}
+			sizeSum += result
+			continue
+		} else if isDir {
+			continue
 		}
 
 		fileName := fileInfo.Name()
@@ -52,9 +64,7 @@ func FormatSize(size int, human bool) string {
 	}
 
 	var floatSize = float64(size)
-
 	var unit string
-
 	var formatSize int
 
 	if floatSize > math.Pow(float64(1024), float64(6)) {
