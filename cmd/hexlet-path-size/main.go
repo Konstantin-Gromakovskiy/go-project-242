@@ -11,6 +11,7 @@ import (
 
 func main() {
 	cmd := &cli.Command{
+		UseShortOptionHandling: true,
 		Flags: []cli.Flag{
 			&cli.BoolFlag{
 				Name:  "human",
