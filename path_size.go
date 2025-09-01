@@ -65,31 +65,36 @@ func FormatSize(size int, human bool) string {
 
 	var floatSize = float64(size)
 	var unit string
-	var formatSize int
+	var formatSize float64
 
-	if floatSize > math.Pow(float64(1024), float64(6)) {
-		formatSize = int(floatSize / math.Pow(float64(1024), float64(6)))
+	if floatSize >= math.Pow(float64(1024), float64(6)) {
+		formatSize = floatSize / math.Pow(float64(1024), float64(6))
 		unit = "EB"
-	} else if floatSize > math.Pow(float64(1024), float64(5)) {
-		formatSize = int(floatSize / math.Pow(float64(1024), float64(5)))
+	} else if floatSize >= math.Pow(float64(1024), float64(5)) {
+		formatSize = floatSize / math.Pow(float64(1024), float64(5))
 		unit = "PB"
-	} else if floatSize > math.Pow(float64(1024), float64(4)) {
-		formatSize = int(floatSize / math.Pow(float64(1024), float64(4)))
+	} else if floatSize >= math.Pow(float64(1024), float64(4)) {
+		formatSize = floatSize / math.Pow(float64(1024), float64(4))
 		unit = "TB"
-	} else if floatSize > math.Pow(float64(1024), float64(3)) {
-		formatSize = int(floatSize / math.Pow(float64(1024), float64(3)))
+	} else if floatSize >= math.Pow(float64(1024), float64(3)) {
+		formatSize = floatSize / math.Pow(float64(1024), float64(3))
 		unit = "GB"
-	} else if floatSize > math.Pow(float64(1024), float64(2)) {
-		formatSize = int(floatSize / math.Pow(float64(1024), float64(2)))
+	} else if floatSize >= math.Pow(float64(1024), float64(2)) {
+		formatSize = floatSize / math.Pow(float64(1024), float64(2))
 		unit = "MB"
-	} else if floatSize > 1024 {
-		formatSize = int(floatSize / float64(1024))
+	} else if floatSize >= 1024 {
+		formatSize = floatSize / float64(1024)
 		unit = "KB"
 	} else {
+		formatSize = floatSize
 		unit = "B"
 	}
 
-	return fmt.Sprintf("%d%s", formatSize, unit)
+	if formatSize == math.Trunc(floatSize) {
+		return fmt.Sprintf("%.0f%s", formatSize, unit)
+	}
+
+	return fmt.Sprintf("%.1f%s", formatSize, unit)
 }
 
 func GetPathSize(path string, human, findHidden, recursive bool) (string, error) {
