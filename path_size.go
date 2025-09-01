@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-func GetSize(path string, findHidden bool, recursive bool) (int, error) {
+func GetPathSize(path string, findHidden bool, recursive bool) (int, error) {
 
 	file, err := os.Lstat(path)
 	if err != nil {
@@ -35,7 +35,7 @@ func GetSize(path string, findHidden bool, recursive bool) (int, error) {
 		isDir := fileInfo.IsDir()
 
 		if isDir && recursive {
-			result, err := GetSize(filepath.Join(path, fileInfo.Name()), findHidden, recursive)
+			result, err := GetPathSize(filepath.Join(path, fileInfo.Name()), findHidden, recursive)
 
 			if err != nil {
 				return 0, err

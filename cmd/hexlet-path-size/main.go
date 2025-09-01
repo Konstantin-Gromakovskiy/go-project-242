@@ -35,7 +35,7 @@ func main() {
 			hiddenFlag := cmd.Bool("all")
 			recursiveFlag := cmd.Bool("recursive")
 			path := cmd.Args().First()
-			result, err := code.GetSize(path, hiddenFlag, recursiveFlag)
+			result, err := code.GetPathSize(path, hiddenFlag, recursiveFlag)
 
 			if err != nil {
 				fmt.Print(err)
