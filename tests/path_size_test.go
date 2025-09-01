@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestGetPathSize_File(t *testing.T) {
+func TestGetSize(t *testing.T) {
 	workDir, _ := os.Getwd()
 
 	tests := []struct {
@@ -42,6 +42,24 @@ func TestGetPathSize_File(t *testing.T) {
 				assert.NoError(t, err)
 			}
 			assert.Equal(t, tt.pathSize, funcResult)
+		})
+	}
+}
+
+func TestFormatSize(t *testing.T) {
+	tests := []struct {
+		name      string
+		size      int
+		humanFlag bool
+		result    string
+	}{
+		{"2.0KB, human mod-on", 2048, true, "2.0KB"},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			funcResult := code.FormatSize(tt.size, tt.humanFlag)
+			assert.Equal(t, tt.result, funcResult)
 		})
 	}
 }

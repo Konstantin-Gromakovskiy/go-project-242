@@ -90,10 +90,6 @@ func FormatSize(size int, human bool) string {
 		unit = "B"
 	}
 
-	if formatSize == math.Trunc(floatSize) {
-		return fmt.Sprintf("%.0f%s", formatSize, unit)
-	}
-
 	return fmt.Sprintf("%.1f%s", formatSize, unit)
 }
 
