@@ -35,7 +35,7 @@ func TestGetPathSize_File(t *testing.T) {
 	for _, tt := range tests {
 		fixturePath := filepath.Join(workDir, tt.path)
 		t.Run(tt.name, func(t *testing.T) {
-			funcResult, err := code.GetPathSize(fixturePath, tt.hiddenFlag, tt.recursiveFlag)
+			funcResult, err := code.GetSize(fixturePath, tt.hiddenFlag, tt.recursiveFlag)
 			if tt.err != nil {
 				assert.Error(t, err)
 			} else {
