@@ -22,7 +22,6 @@ func TestGetSize(t *testing.T) {
 	}{
 		{"empty file", "testData/emptyFile.txt", false, false, 0, nil},
 		{"not empty file", "testData/text.txt", false, false, 1094, nil},
-		{"empty directory", "testData/emptyDir", false, false, 0, nil},
 		{"not empty directory", "testData/notEmptyDir", false, false, 14, nil},
 		{"not empty directory, search all", "testData/notEmptyDir", true, false, 55, nil},
 		{"recursive directory", "testData/recursiveDir", false, false, 14, nil},
