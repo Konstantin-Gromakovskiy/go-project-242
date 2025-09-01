@@ -93,7 +93,7 @@ func FormatSize(size int, human bool) string {
 	return fmt.Sprintf("%.1f%s", formatSize, unit)
 }
 
-func GetPathSize(path string, human, findHidden, recursive bool) (string, error) {
+func GetPathSize(path string, findHidden, human, recursive bool) (string, error) {
 	sizeInt, err := GetSize(path, findHidden, recursive)
 	if err != nil {
 		return "0B", err
